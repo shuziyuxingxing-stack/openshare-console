@@ -6,9 +6,17 @@ OpenShare Console is a Windows-first local control panel for publishing files or
 
 > This project is at an early stage. Publishing local files to the Internet carries security risks; read the Security section first.
 
+## Why OpenShare Console
+
+- **One-click publishing, end to end**: select files, start the local service, establish a public route, obtain the visitor URL, and verify reachability from one guided console.
+- **No complex configuration**: the console discovers clients, reuses existing authorization, and generates connector configuration wherever possible. It is designed for temporary sharing, last-minute demos, rapid testing, and situations where there is no time for a traditional deployment.
+- **No fee for the software**: OpenShare Console charges no subscription or service fee. Free capabilities offered by Tailscale Serve/Funnel, Cloudflare Tunnel, or native IPv6 can be used without purchasing any OpenShare Console service.
+
+> OpenShare Console itself is completely free. A separately purchased VPS or domain, and third-party usage beyond a provider's free allowance, may still incur charges from that provider.
+
 ## Features
 
-- Select a directory and local port, then start or stop the file service.
+- Select a directory and local port, then run the complete local-to-public publishing workflow from one place.
 - Create six-digit user passwords and grant read, upload, modify, rename, and delete permissions independently.
 - Record access time, account, connection source, browser, operation, path, status code, and duration.
 - Run, cancel, retry, and review observable background workflows.
