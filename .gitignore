@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Runtime files may temporarily contain connector credentials.
+runtime/*
+!runtime/.gitkeep
+*.log
+*.jsonl
+*.dpapi
+*.new
+
+# Local credentials and generated connector configuration
+.env
+.env.*
+!.env.example
+cert.pem
+*-token.txt
+frpc.toml
+frps.toml
+Caddyfile
+*.pem
+*.key
+*.pfx
+*.p12
+
+# IDE / operating system
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
