@@ -59,6 +59,8 @@ cd openshare-console
 
 Or run `py -3 control.py`, then open <http://127.0.0.1:8765/>. 
 
+The launcher detects an installed Python 3.11 or newer and waits for the console to respond before opening the browser. Running it again opens the existing console. Use `-NoBrowser` to start without opening a browser. Startup failures are reported in the terminal; logs are saved to `%LOCALAPPDATA%\ExposureConsole\control\console.stdout.log` and `console.stderr.log`. Use `py -0p` to list installed Python versions, or run `py -3 control.py` in the terminal to see errors directly.
+
 Run tests with `py -3 -m unittest -v`.
 
 ## Cloudflare authorization
