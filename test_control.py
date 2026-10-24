@@ -80,6 +80,15 @@ class FilesTest(unittest.TestCase):
 
 
 class WorkflowTest(unittest.TestCase):
+    def test_quoted_manual_tool_path_is_normalized_and_used(self):
+        with tempfile.TemporaryDirectory() as folder:
+            executable = Path(folder) / 'frpc.exe'
+            executable.write_text('placeholder')
+            with patch.object(control, 'RAW_FIND', return_value={'frpc': {'installed': False, 'path': None}}), patch.object(control, 'settings', return_value={'frpcPath': f'"{executable}"'}):
+                found = control.find_tools()
+        self.assertEqual(found['frpc'], {'installed': True, 'path': str(executable)})
+        self.assertEqual(control.clean_tool_path("  'C:\\Tools\\caddy.exe' "), r'C:\Tools\caddy.exe')
+
     def test_ipv6_inbound_probe_is_first_and_blocks_file_service(self):
         task = {'id': 'ipv6-preflight', 'steps': []}
         control.CANCEL[task['id']] = threading.Event()
