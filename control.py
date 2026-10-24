@@ -49,8 +49,21 @@ TOOL_NAMES = {'tailscale': 'tailscale.exe', 'cloudflared': 'cloudflared.exe', 'f
 IPV6_PORT_TEST_API = 'https://api.networktools.dev/v1/port-test'
 
 
+def clean_tool_path(value):
+    """Accept quoted paths pasted from Explorer or a terminal."""
+    path = str(value or '').strip()
+    if len(path) >= 2 and path[0] == path[-1] and path[0] in {'"', "'"}:
+        path = path[1:-1].strip()
+    return os.path.expandvars(path)
+
+
 def settings():
-    return {**DEFAULTS, **storage.read(CONFIG, {})}
+    value = {**DEFAULTS, **storage.read(CONFIG, {})}
+    for name in TOOL_NAMES:
+        key = name + 'Path'
+        if key in value:
+            value[key] = clean_tool_path(value[key])
+    return value
 
 
 def redact(value):
@@ -88,7 +101,7 @@ def find_tools():
     found = RAW_FIND()
     config = settings()
     for name in found:
-        paths = [config.get(name + 'Path'), str(TOOLS / (name + '.exe')), found[name]['path']]
+        paths = [clean_tool_path(config.get(name + 'Path')), str(TOOLS / (name + '.exe')), found[name]['path']]
         found[name] = {'installed': False, 'path': None}
         for path in paths:
             if path and Path(path).is_file():
@@ -1009,6 +1022,8 @@ class Handler(core.ConsoleHandler):
                     allowed = set(DEFAULTS) | SECRET_KEYS | {t + 'Path' for t in ('tailscale', 'cloudflared', 'caddy', 'frpc')}
                     for k, v in p.items():
                         if k in allowed and (k not in SECRET_KEYS or v):
+                            if k.endswith('Path'):
+                                v = clean_tool_path(v)
                             value[k] = v
                             if k in SECRET_KEYS and v:
                                 SECRETS.add(v)
