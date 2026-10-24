@@ -66,6 +66,8 @@ py -3 control.py
 
 随后打开 <http://127.0.0.1:8765/>。管理控制台只监听回环地址，不应通过端口映射直接暴露到公网。
 
+启动脚本会自动检测已安装的 Python 3.11 或更高版本，并在控制台就绪后打开浏览器；重复执行会打开已运行的控制台。可加 `-NoBrowser` 仅启动服务。若启动失败，终端会显示错误，启动日志位于 `%LOCALAPPDATA%\ExposureConsole\control\console.stdout.log` 和 `console.stderr.log`。可用 `py -0p` 查看已安装的 Python 版本，也可在终端直接运行 `py -3 control.py` 查看报错。
+
 运行测试：
 
 ```powershell
